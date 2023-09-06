@@ -1,5 +1,4 @@
 import configparser
-import csv
 import os
 import sqlite3
 import sys
@@ -50,21 +49,6 @@ def create_table(db_path):
     for _, sql_request in sql_create_table.items():
         run_query(db_path, sql_request)
     print('База данных создана!')
-
-
-def import_data(db_path, data_path):
-    """Импорт данных из csv файла."""
-
-    with open(data_path + '/subsystems.csv') as csv_file:
-        reader_object = csv.reader(csv_file)
-        next(reader_object)
-        run_query(
-            db_path,
-            'INSERT INTO subsystems VALUES (?, ?)',
-            [(i[0], i[1]) for i in reader_object],
-            import_csv=True,
-        )
-    print('Данные загружены!')
 
 
 def run_query(db_path, query, data=(), import_csv=False):
